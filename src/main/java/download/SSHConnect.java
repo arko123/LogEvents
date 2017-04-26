@@ -15,9 +15,9 @@ public class SSHConnect {
 
     public static void connectToServer(String user, String password, String host, int port, String path, String reg, String lastModifyDate){
 
-         user = "awozniak";
-         password = "tyzuvyfi+";
-         host = "student.agh.edu.pl";
+         user = "***";
+         password = "***+";
+         host = "***";
          port=22;
         path = "/home/eaiibgrp/awozniak";
 
