@@ -1,11 +1,14 @@
 package download;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.Exchanger;
 
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 
@@ -17,8 +20,8 @@ public class SSHConnect {
         List<String> fileList = new ArrayList<String>();
 
          user = "***";
-         password = "****";
-         host = "****";
+         password = "****+";
+         host = "***";
          port=22;
         path = "/home/eaiibgrp/awozniak";
 
@@ -71,6 +74,11 @@ public class SSHConnect {
 
     }
 
+    public static void main(String [] args) throws IOException{
+        connectToServer("asd","asd","asd",22,"asd","asd",0);
+
+
+    }
 
     }
 
