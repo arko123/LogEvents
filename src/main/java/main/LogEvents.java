@@ -4,17 +4,19 @@ import java.io.IOException;
 
 import download.GetLocalLogs;
 import download.GetLogsOverHttp;
+import mail.MailProperties;
 
 /**
  * Created by arek on 24.04.2017.
  */
 public class LogEvents {
 	private DownloadConfiguration downloadConfiguration;
+	private MailProperties mailProperties;
 	
-	LogEvents(String downloadConfFilePath){
+	LogEvents(String downloadConfFilePath,String mailPropertyFilePath){
 		this.downloadConfiguration= new DownloadConfiguration(downloadConfFilePath);
 
-		System.out.println("------------PROPERTIES------------------");
+		System.out.println("------------LOGS_PROPERTIES------------------");
 		System.out.println("user: "+downloadConfiguration.user);
 		System.out.println("password: "+downloadConfiguration.password);
 		System.out.println("runFrequency: "+downloadConfiguration.runFrequency);
@@ -23,6 +25,21 @@ public class LogEvents {
 		System.out.println("saveLogsIn: "+downloadConfiguration.saveLogsIn);
 		System.out.println("connectionType: "+downloadConfiguration.connectionType);
 		System.out.println("----------------------------------------");
+		
+		this.mailProperties= new MailProperties(mailPropertyFilePath);
+		System.out.println("------------MAIL_PROPERTIES------------------");
+		System.out.println("to: "+mailProperties.to);
+		System.out.println("from: "+mailProperties.from);
+		System.out.println("host: "+mailProperties.host);
+		System.out.println("server: "+mailProperties.server);
+		System.out.println("user: "+mailProperties.user);
+		System.out.println("password: "+mailProperties.password);
+		System.out.println("socketFactoryPort: "+mailProperties.socketFactoryPort);
+		System.out.println("socketFactoryClass: "+mailProperties.socketFactoryClass);
+		System.out.println("auth: "+mailProperties.auth);
+		System.out.println("port: "+mailProperties.port);
+		System.out.println("----------------------------------------");
+		
 	}
 	
 	public void run() throws InterruptedException, IOException{

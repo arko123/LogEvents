@@ -8,7 +8,9 @@ public class LogEventsTest {
 		//String propertiesPath = "C:\\Users\\LenovoY580_Wojtek\\git\\LogEvents\\testFiles\\properties\\download_local.properties"; 
 		String propertiesPath = "C:\\Users\\LenovoY580_Wojtek\\git\\LogEvents\\testFiles\\properties\\download_http.properties"; 
 		
-		LogEvents logEvents = new LogEvents(propertiesPath);
+		String mailPropertyFilePath = "C:\\Users\\LenovoY580_Wojtek\\git\\LogEvents\\testFiles\\properties\\mail.properties";
+		
+		LogEvents logEvents = new LogEvents(propertiesPath,mailPropertyFilePath);
 
 		logEvents.run();
 	}

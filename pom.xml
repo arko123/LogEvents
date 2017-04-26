@@ -30,6 +30,10 @@
             <artifactId>commons-net</artifactId>
             <version>3.6</version>
         </dependency>
-
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4</version>
+		</dependency>
     </dependencies>
 </project>
