@@ -23,7 +23,7 @@ public class GetLocalLogs {
 	private String pathTo;
 	private String fileNameRegex;
 	private Date lastDownloadDate;
-	private int lastDownloadLine;
+	private long lastDownloadLine;
 	
 	public GetLocalLogs(String pathFrom, String pathTo, String fileNameRegex) {
 		this.pathFrom=pathFrom;
@@ -38,7 +38,7 @@ public class GetLocalLogs {
 			this.getLatestLogs(new Date(), 0);
 	}
 	
-	public void getLatestLogs(Date beginFromDate,int beginFromLine){
+	public void getLatestLogs(Date beginFromDate,long beginFromLine){
 		File directory = new File(pathFrom);
 
 		FileFilter filter1 =  new LogFileFilter(fileNameRegex,beginFromDate);
@@ -68,7 +68,7 @@ public class GetLocalLogs {
 		}
 	}
 	
-	private void download(List<File> files, Date beginFromDate, int beginFromLine){
+	private void download(List<File> files, Date beginFromDate, long beginFromLine){
 	    try {
 	    	int lastLinetmp = 0;
 	    	long lastModifiedtmp = 0;
@@ -83,12 +83,12 @@ public class GetLocalLogs {
 	    		BasicFileAttributes attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
 	    		if(attr.creationTime().toMillis()<beginFromDate.getTime()){
 	    			//Plik z dopisanymi logami po ostatnim pobraniu
-	    			tail(target,beginFromLine);
+	    			FileUtils.tail(target,beginFromLine);
 	    			System.out.println("Converted part of file: "+file.getName());
 	    		}
 	    		if(lastModifiedtmp<file.lastModified()){
 	    			lastModifiedtmp=file.lastModified();
-	    			lastLinetmp= getLineNumber(target);
+	    			lastLinetmp= FileUtils.getLineNumber(target);
 	    		}
 		    }
 	    	lastDownloadDate= new Date();
@@ -98,38 +98,4 @@ public class GetLocalLogs {
 	    	System.out.println("oops error! " + e.getMessage());	
 	    }
 	}  
-	
-	private void tail (Path src, int beginFromLine) throws IOException{
-		BufferedReader br=new BufferedReader(new FileReader(src.toString()));
-		//String buffer to store contents of the file
-		StringBuffer sb=new StringBuffer("");		
-		//Keep track of the line number
-		int linenumber=1;
-		String line;
-
-		while((line=br.readLine())!=null)
-		{
-			//Store each valid line in the string buffer
-			if(linenumber>beginFromLine)
-				sb.append(line+"\n");
-			linenumber++;
-		}
-		br.close();
-		
-		
-
-		FileWriter writer = new FileWriter(new File(src.toString()));
-		//Write entire string buffer into the file
-		writer.write(sb.toString());
-		writer.close();
-		
-	}
-	
-	private int getLineNumber(Path src) throws IOException{
-		BufferedReader reader = new BufferedReader(new FileReader(src.toString()));
-		int lines = 0;
-		while (reader.readLine() != null) lines++;
-		reader.close();
-		return lines;
-	}
 }
