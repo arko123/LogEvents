@@ -29,7 +29,10 @@ public class GetLogsOverHttp {
 	
 	
 	public void getLatestLogs() throws IOException{
+		if(lastfileLength!=0)
 			this.getLatestLogs(lastfileLength, lastDownloadLine);
+		else
+			this.getLatestLogs(Long.MAX_VALUE, 0);
 	}
 	
 	public void getLatestLogs(long lastfileLenght,long beginFromLine) throws IOException{
@@ -44,10 +47,16 @@ public class GetLogsOverHttp {
 		 File file = target.toFile();
 		 long fileLengthtmp = file.length();
 		 long lastLinetmp= FileUtils.getLineNumber(target);
+         System.out.println("---------removeUnnesesaryLogs-----------------------");		 
+         System.out.println("fileLengthtmp = " + fileLengthtmp);
+         System.out.println("lastfileLength = " + lastfileLength);
 		 
-		 if(fileLengthtmp>=lastfileLength){
+		 if(fileLengthtmp>=lastfileLength ){		 
+	         System.out.println("lastDownloadLine = " + lastDownloadLine);
+	         System.out.println("lastLinetmp = " + lastLinetmp);
 			 FileUtils.tail(target,lastDownloadLine);
 		 }
+         System.out.println("-------------------------------------------");
 		 
 		 lastfileLength=fileLengthtmp;
 		 lastDownloadLine=lastLinetmp;
@@ -100,7 +109,7 @@ public class GetLogsOverHttp {
 	 
 	            outputStream.close();
 	            inputStream.close();
-	 
+
 	            System.out.println("File downloaded");
 	            httpConn.disconnect();
 	            return saveFilePath;
