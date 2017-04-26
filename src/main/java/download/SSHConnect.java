@@ -1,23 +1,24 @@
 package download;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
-import java.util.concurrent.Exchanger;
 
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 
 public class SSHConnect {
 
 
-    public static void connectToServer(String user, String password, String host, int port, String path, String reg, String lastModifyDate){
+    public static void connectToServer(String user, String password, String host, int port, String path, String regex, int lastModifyDate){
+
+        List<String> fileList = new ArrayList<String>();
 
          user = "***";
-         password = "***+";
-         host = "***";
+         password = "****";
+         host = "****";
          port=22;
         path = "/home/eaiibgrp/awozniak";
 
@@ -36,16 +37,33 @@ public class SSHConnect {
 
             Vector filelist = sftpChannel.ls(path);
 
+
+
             for(Object entry : filelist) {
                 ChannelSftp.LsEntry lsEntry = getInstance(entry);
+
+                if(lsEntry.getFilename().matches(regex) && lsEntry.getAttrs().getMTime()>lastModifyDate) {
+                    fileList.add(lsEntry.getFilename());
+                    lastModifyDate= lsEntry.getAttrs().getMTime();
+                }
                 System.out.println(lsEntry.getFilename());
             }
+
+
+
+
+            if(fileList.isEmpty())
+                for(String fName: fileList){
+                    sftpChannel.get(fName,fName);
+                }
+
+
 
 
         } catch(Exception e ){
             System.out.println(e.getMessage());
         }
-
+//    return fileList;
     }
 
     private static ChannelSftp.LsEntry getInstance(Object obj){
@@ -53,10 +71,6 @@ public class SSHConnect {
 
     }
 
-    public static void main(String [] args) throws IOException{
-        connectToServer("asd","asd","asd",22,"asd","asd","dsa");
-
-    }
 
     }
 
