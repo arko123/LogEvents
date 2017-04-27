@@ -14,11 +14,11 @@ import com.sun.mail.handlers.message_rfc822;
 import mail.MailProperties;
 import mail.MailSender;
 
-public class LogAnalizer {
+public class LogAnalyzer {
 	String logsLocation;
 	MailSender mailSender;
 	
-	public LogAnalizer(String logsLocation, MailProperties mailProperties){
+	public LogAnalyzer(String logsLocation, MailProperties mailProperties){
 		this.logsLocation=logsLocation;
 		this.mailSender= new MailSender(mailProperties);
 	}
@@ -40,7 +40,7 @@ public class LogAnalizer {
 			String line;
 			
 			while((line=br.readLine())!=null){
-				if(true){
+				if(line.contains("")){
 					sendEmail = true;
 					messageBuffer.append("\n"+line);
 				}

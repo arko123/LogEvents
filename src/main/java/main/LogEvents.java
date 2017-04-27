@@ -3,7 +3,7 @@ package main;
 import java.io.IOException;
 import java.util.Date;
 
-import analize.LogAnalizer;
+import analize.LogAnalyzer;
 import download.FTPConnect;
 import download.GetLocalLogs;
 import download.GetLogsOverHttp;
@@ -52,7 +52,7 @@ public class LogEvents {
 				runSSH();
 				break;
 			case F:
-				runSSH();
+				runFTP();
 				break;
 			case H:
 				runHTTP();
@@ -68,7 +68,7 @@ public class LogEvents {
 	private void runLOCALHOST() throws InterruptedException {
 		System.out.println("runLOCALHOST");
 		GetLocalLogs getter = new GetLocalLogs(downloadConfiguration.getlogsFrom,downloadConfiguration.saveLogsIn,downloadConfiguration.fileNameRegex);
-		LogAnalizer logAnalizer = new LogAnalizer(downloadConfiguration.saveLogsIn,mailProperties);
+		LogAnalyzer logAnalizer = new LogAnalyzer(downloadConfiguration.saveLogsIn,mailProperties);
 		
 		do{
 			getter.getLatestLogs();
@@ -81,7 +81,7 @@ public class LogEvents {
 	private void runHTTP() throws IOException, InterruptedException {
 		System.out.println("runHTTP");
 		GetLogsOverHttp getter = new GetLogsOverHttp(downloadConfiguration.getlogsFrom, downloadConfiguration.saveLogsIn);
-		LogAnalizer logAnalizer = new LogAnalizer(downloadConfiguration.saveLogsIn,mailProperties);
+		LogAnalyzer logAnalizer = new LogAnalyzer(downloadConfiguration.saveLogsIn,mailProperties);
 		
 		do{
 			getter.getLatestLogs();
