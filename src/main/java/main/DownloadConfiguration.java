@@ -12,10 +12,10 @@ public class DownloadConfiguration {
 	public String saveLogsIn;
 	public String fileNameRegex;
 	public long runFrequency;
-	
-	
+
+
 	public DownloadConfiguration(String downloadConfFilePath) {
-		loadProperties(downloadConfFilePath);
+//		loadProperties(downloadConfFilePath);
 	}
 
 
@@ -35,22 +35,22 @@ public class DownloadConfiguration {
 			saveLogsIn = prop.getProperty(DownloadConfigurationTags.SEVE_LOGS_IN, null);
 			fileNameRegex = prop.getProperty(DownloadConfigurationTags.FILE_NAME_REGEX, null);
 			runFrequency = Long.parseLong(prop.getProperty(DownloadConfigurationTags.RUN_FREQUENCY, "0"));
-			switch(prop.getProperty(DownloadConfigurationTags.CONNECTION_TYPE, null)){
-				case "SSH" :
-					connectionType = ConnectionType.SSH;
-					break;
-				case "FTP" :
-					connectionType = ConnectionType.FTP;
-					break;
-				case "HTTP" :
-					connectionType = ConnectionType.HTTP;
-					break;
-				case "LOCALHOST" :
-					connectionType = ConnectionType.LOCALHOST;
-					break;
-				default :
-					throw new IllegalArgumentException("Invalid connectionType: ");
-			}
+//			switch(prop.getProperty(DownloadConfigurationTags.CONNECTION_TYPE, null)){
+//				case "S" :
+//					connectionType = ConnectionType.S;
+//					break;
+//				case "F" :
+//					connectionType = ConnectionType.F;
+//					break;
+//				case "H" :
+//					connectionType = ConnectionType.H;
+//					break;
+//				case "L" :
+//					connectionType = ConnectionType.L;
+//					break;
+//				default :
+//					throw new IllegalArgumentException("Invalid connectionType: ");
+//			}
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {
@@ -63,6 +63,6 @@ public class DownloadConfiguration {
 			}
 		}
 	}
-	
-	
+
+
 }
