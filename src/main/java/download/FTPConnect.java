@@ -12,6 +12,25 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 
 public class FTPConnect {
+
+    private String user;
+
+    public FTPConnect(String user, String server, String pass, String path, String regex, Date modify) {
+        this.user = user;
+        this.server = server;
+        this.pass = pass;
+        this.path = path;
+        this.regex = regex;
+        this.modify = modify;
+    }
+
+    private String server;
+    private String pass;
+    private String path;
+    private String regex;
+    private Date modify;
+
+
     private static void showServerReply(FTPClient ftpClient) {
         String[] replies = ftpClient.getReplyStrings();
         if (replies != null && replies.length > 0) {
@@ -21,12 +40,14 @@ public class FTPConnect {
         }
     }
 
-    public static void getFiles(String user, String server, String pass, String path, String regex, Date modifyD){
 
-         server = "***";
-         int port = 21;
-         user = "***";
-         pass = "****";
+
+    public void getFiles() {
+
+//        server = "***";
+      int port = 21;
+//        user = "***";
+//        pass = "****";
         FTPClient ftpClient = new FTPClient();
         try {
             List<String> fileList = new ArrayList<String>();
@@ -48,16 +69,16 @@ public class FTPConnect {
 //                System.out.println(ftpClient.listDirectories()[2].getName());
             }
 
-            FTPFile [] serverFileList = ftpClient.listFiles(path);
+            FTPFile[] serverFileList = ftpClient.listFiles(path);
 
-            for(FTPFile file: serverFileList) {
+            for (FTPFile file : serverFileList) {
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
-                String timePart = ftpClient.getModificationTime(path+file.getName().split(" ")[1]);
+                String timePart = ftpClient.getModificationTime(path + file.getName().split(" ")[1]);
                 Date modifyTime = dateFormat.parse(timePart);
 
-                if(file.getName().matches(regex) && modifyTime.after(modifyD)) {
+                if (file.getName().matches(regex) && modifyTime.after(modify)) {
                     fileList.add(file.getName());
                 }
             }
@@ -68,39 +89,5 @@ public class FTPConnect {
         }
 
     }
-
-//    public static void main(String[] args) {
-//        String server = "ftp.stosowana.pl";
-//        int port = 21;
-//        String user = "Arko123";
-//        String pass = "****";
-//        FTPClient ftpClient = new FTPClient();
-//        try {
-//            List<String> fileList = new ArrayList<String>();
-//
-//            ftpClient.connect(server, port);
-//            showServerReply(ftpClient);
-//            int replyCode = ftpClient.getReplyCode();
-//            if (!FTPReply.isPositiveCompletion(replyCode)) {
-//                System.out.println("Operation failed. Server reply code: " + replyCode);
-//                return;
-//            }
-//            boolean success = ftpClient.login(user, pass);
-//            showServerReply(ftpClient);
-//            if (!success) {
-//                System.out.println("Could not login to the server");
-//                return;
-//            } else {
-//                System.out.println("LOGGED IN SERVER");
-////                System.out.println(ftpClient.listDirectories()[2].getName());
-//            }
-//
-//            ftpClient.listFiles()
-//
-//        } catch (IOException ex) {
-//            System.out.println("Oops! Something wrong happened");
-//
-//            ex.printStackTrace();
-//        }
-//    }
 }
+

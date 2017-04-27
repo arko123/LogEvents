@@ -14,16 +14,34 @@ import com.jcraft.jsch.Session;
 
 public class SSHConnect {
 
+     String user;
+    private String host;
+    private String password;
+    private int port;
+    private String path;
+    private String regex;
+    private int lastModifyDate;
 
-    public static void connectToServer(String user, String password, String host, int port, String path, String regex, int lastModifyDate){
+    public SSHConnect(String user, String password, String host, int port, String path, String regex, int lastModifyDate) {
+        this.user = user;
+        this.password=password;
+        this.host = host;
+        this.port = port;
+        this.path = path;
+        this.regex = regex;
+        this.lastModifyDate = lastModifyDate;
+    }
+
+
+    public void connectToServer(){
 
         List<String> fileList = new ArrayList<String>();
 
-         user = "***";
-         password = "****+";
-         host = "***";
-         port=22;
-        path = "/home/eaiibgrp/awozniak";
+//         user = "user";
+//         password = "****+";
+//         host = "***";
+//         port=22;
+//        path = "/home/eaiibgrp/awozniak";
 
         try {
             JSch jsch = new JSch();
@@ -69,16 +87,11 @@ public class SSHConnect {
 //    return fileList;
     }
 
-    private static ChannelSftp.LsEntry getInstance(Object obj){
+    private ChannelSftp.LsEntry getInstance(Object obj){
         return (com.jcraft.jsch.ChannelSftp.LsEntry)obj;
 
     }
 
-    public static void main(String [] args) throws IOException{
-        connectToServer("asd","asd","asd",22,"asd","asd",0);
-
-
-    }
 
     }
 

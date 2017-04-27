@@ -69,7 +69,7 @@ public class GetLogsOverHttp {
 	        HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
 	        int responseCode = httpConn.getResponseCode();
 	 
-	        // always check HTTP response code first
+	        // always check H response code first
 	        if (responseCode == HttpURLConnection.HTTP_OK) {
 	            String fileName = "";
 	            String disposition = httpConn.getHeaderField("Content-Disposition");
@@ -94,7 +94,7 @@ public class GetLogsOverHttp {
 	            System.out.println("Content-Length = " + contentLength);
 	            System.out.println("fileName = " + fileName);
 	 
-	            // opens input stream from the HTTP connection
+	            // opens input stream from the H connection
 	            InputStream inputStream = httpConn.getInputStream();
 	            String saveFilePath = saveDir + File.separator + fileName;
 	             
@@ -114,7 +114,7 @@ public class GetLogsOverHttp {
 	            httpConn.disconnect();
 	            return saveFilePath;
 	        } else {
-	            System.out.println("No file to download. Server replied HTTP code: " + responseCode);
+	            System.out.println("No file to download. Server replied H code: " + responseCode);
 	            httpConn.disconnect();
 	            return null;
 	        }

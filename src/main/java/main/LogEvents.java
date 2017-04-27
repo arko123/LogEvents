@@ -1,9 +1,12 @@
 package main;
 
 import java.io.IOException;
+import java.util.Date;
 
+import download.FTPConnect;
 import download.GetLocalLogs;
 import download.GetLogsOverHttp;
+import download.SSHConnect;
 import mail.MailProperties;
 
 /**
@@ -44,16 +47,16 @@ public class LogEvents {
 	
 	public void run() throws InterruptedException, IOException{
 		switch(downloadConfiguration.connectionType){
-			case SSH :
+			case S:
 				runSSH();
 				break;
-			case FTP :
-				runFTP();
+			case F:
+				runSSH();
 				break;
-			case HTTP :
+			case H:
 				runHTTP();
 				break;
-			case LOCALHOST :
+			case L:
 				runLOCALHOST();
 				break;
 			default :
@@ -84,14 +87,28 @@ public class LogEvents {
 		}while(downloadConfiguration.runFrequency!=0 );
 	}
 
-	private void runFTP() {
-		// TODO Auto-generated method stub
-		
+	private void runSSH() throws IOException, InterruptedException{
+		System.out.println("runSSH");
+		SSHConnect sshConnect = new SSHConnect("usrname", "passwd","hostname",11,"port","asd",12345);
+
+		do{
+			sshConnect.connectToServer();
+			Thread.sleep(1000*downloadConfiguration.runFrequency);
+			System.out.println("-----------SLEEP-----------------");
+		} while(downloadConfiguration.runFrequency!=0 );
+
 	}
 
-	private void runSSH() {
-		// TODO Auto-generated method stub
-		
+	private void runFTP() throws IOException, InterruptedException{
+		System.out.println("runFTP");
+		FTPConnect ftpConnect = new FTPConnect("usrname", "passwd","hostname","path","port", new Date());
+
+		do{
+			ftpConnect.getFiles();
+			Thread.sleep(1000*downloadConfiguration.runFrequency);
+			System.out.println("-----------SLEEP-----------------");
+		} while(downloadConfiguration.runFrequency!=0 );
+
 	}
 	
 	
