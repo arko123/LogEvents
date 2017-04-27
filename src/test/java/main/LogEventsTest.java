@@ -11,7 +11,6 @@ public class LogEventsTest {
 		String mailPropertyFilePath = "C:\\Users\\LenovoY580_Wojtek\\git\\LogEvents\\testFiles\\properties\\mail.properties";
 		
 		LogEvents logEvents = new LogEvents(propertiesPath,mailPropertyFilePath);
-
 		logEvents.run();
 	}
 

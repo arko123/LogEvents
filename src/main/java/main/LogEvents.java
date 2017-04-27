@@ -2,6 +2,7 @@ package main;
 
 import java.io.IOException;
 
+import analize.LogAnalizer;
 import download.GetLocalLogs;
 import download.GetLogsOverHttp;
 import mail.MailProperties;
@@ -64,6 +65,7 @@ public class LogEvents {
 	private void runLOCALHOST() throws InterruptedException {
 		System.out.println("runLOCALHOST");
 		GetLocalLogs getter = new GetLocalLogs(downloadConfiguration.getlogsFrom,downloadConfiguration.saveLogsIn,downloadConfiguration.fileNameRegex);
+		LogAnalizer logAnalizer = new LogAnalizer(downloadConfiguration.saveLogsIn,mailProperties);
 		
 		do{
 			getter.getLatestLogs();
@@ -76,9 +78,11 @@ public class LogEvents {
 	private void runHTTP() throws IOException, InterruptedException {
 		System.out.println("runHTTP");
 		GetLogsOverHttp getter = new GetLogsOverHttp(downloadConfiguration.getlogsFrom, downloadConfiguration.saveLogsIn);
+		LogAnalizer logAnalizer = new LogAnalizer(downloadConfiguration.saveLogsIn,mailProperties);
 		
 		do{
 			getter.getLatestLogs();
+			logAnalizer.run();
 			Thread.sleep(10000 * downloadConfiguration.runFrequency);
 			System.out.println("-----------SLEEP-----------------");
 		}while(downloadConfiguration.runFrequency!=0 );

@@ -7,7 +7,7 @@ import javax.mail.internet.*;
 public class MailSender {
 	private MailProperties mailProperties;
 	
-	MailSender(MailProperties mailProperties){
+	public MailSender(MailProperties mailProperties){
 		this.mailProperties=mailProperties;
 	}
 	
