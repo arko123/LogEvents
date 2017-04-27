@@ -26,7 +26,7 @@ public class LogAnalyzer {
 	
 	public void run() throws IOException{
 		File directory = new File(logsLocation);
-		List<File> files = Arrays.asList(directory);
+		List<File> files = Arrays.asList(directory.listFiles());
 		
 		boolean sendEmail = false;
 		String title = "[LOG ANALYZER] Raport";
@@ -37,11 +37,12 @@ public class LogAnalyzer {
 
 		System.out.println("----------------LOG ANALYZER---------------------");
 		for(File file: files){
+			System.out.println("File analize: "+file.getName());
 			BufferedReader br=new BufferedReader(new FileReader(file));
 			String line;
 			
 			while((line=br.readLine())!=null){
-				if(line.contains("")){
+				if(line.contains("s")){
 					sendEmail = true;
 					messageBuffer.append("\n"+line);
 				}
