@@ -65,13 +65,14 @@ public class LogEvents {
 		}
 	}
 
-	private void runLOCALHOST() throws InterruptedException {
+	private void runLOCALHOST() throws InterruptedException, IOException {
 		System.out.println("runLOCALHOST");
 		GetLocalLogs getter = new GetLocalLogs(downloadConfiguration.getlogsFrom,downloadConfiguration.saveLogsIn,downloadConfiguration.fileNameRegex);
 		LogAnalyzer logAnalizer = new LogAnalyzer(downloadConfiguration.saveLogsIn,mailProperties);
 		
 		do{
 			getter.getLatestLogs();
+			logAnalizer.run();
 			Thread.sleep(10000 * downloadConfiguration.runFrequency);
 			System.out.println("-----------SLEEP-----------------");
 		}while(downloadConfiguration.runFrequency!=0 );
@@ -94,9 +95,11 @@ public class LogEvents {
 	private void runSSH() throws IOException, InterruptedException{
 		System.out.println("runSSH");
 		SSHConnect sshConnect = new SSHConnect("usrname", "passwd","hostname",11,"port","asd",12345);
+		LogAnalyzer logAnalizer = new LogAnalyzer(downloadConfiguration.saveLogsIn,mailProperties);
 
 		do{
 			sshConnect.connectToServer();
+			logAnalizer.run();
 			Thread.sleep(1000*downloadConfiguration.runFrequency);
 			System.out.println("-----------SLEEP-----------------");
 		} while(downloadConfiguration.runFrequency!=0 );
@@ -106,9 +109,11 @@ public class LogEvents {
 	private void runFTP() throws IOException, InterruptedException{
 		System.out.println("runFTP");
 		FTPConnect ftpConnect = new FTPConnect("usrname", "passwd","hostname","path","port", new Date());
+		LogAnalyzer logAnalizer = new LogAnalyzer(downloadConfiguration.saveLogsIn,mailProperties);
 
 		do{
 			ftpConnect.getFiles();
+			logAnalizer.run();
 			Thread.sleep(1000*downloadConfiguration.runFrequency);
 			System.out.println("-----------SLEEP-----------------");
 		} while(downloadConfiguration.runFrequency!=0 );

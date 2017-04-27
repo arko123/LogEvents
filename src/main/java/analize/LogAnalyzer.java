@@ -34,7 +34,8 @@ public class LogAnalyzer {
 		
 		StringBuffer messageBuffer = new StringBuffer("");
 		
-		
+
+		System.out.println("----------------LOG ANALYZER---------------------");
 		for(File file: files){
 			BufferedReader br=new BufferedReader(new FileReader(file));
 			String line;
@@ -46,6 +47,7 @@ public class LogAnalyzer {
 				}
 			}
 			br.close();
+			System.out.println("-------------------------------------");
 		}
 		
 		

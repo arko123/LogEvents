@@ -46,8 +46,8 @@ public class MailSender {
 	         // Send message
 	         Transport.send(mimeMessage);
 	         System.out.println("Sent message successfully....");
-	      }catch (MessagingException mex) {
-	         mex.printStackTrace();
+	      }catch (MessagingException mex) {	         
+	         System.out.println("MAILERROR....\n"+mex.getMessage());
 	      }		
 	}
 	
