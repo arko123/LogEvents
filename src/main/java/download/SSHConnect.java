@@ -1,20 +1,17 @@
 package download;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import java.util.concurrent.Exchanger;
 
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 
 public class SSHConnect {
 
-     String user;
+    String user;
     private String host;
     private String password;
     private int port;
@@ -24,7 +21,7 @@ public class SSHConnect {
 
     public SSHConnect(String user, String password, String host, int port, String path, String regex, int lastModifyDate) {
         this.user = user;
-        this.password=password;
+        this.password = password;
         this.host = host;
         this.port = port;
         this.path = path;
@@ -33,15 +30,10 @@ public class SSHConnect {
     }
 
 
-    public void connectToServer(){
+    public void connectToServer() {
 
         List<String> fileList = new ArrayList<String>();
 
-//         user = "user";
-//         password = "****+";
-//         host = "***";
-//         port=22;
-//        path = "/home/eaiibgrp/awozniak";
 
         try {
             JSch jsch = new JSch();
@@ -59,39 +51,29 @@ public class SSHConnect {
             Vector filelist = sftpChannel.ls(path);
 
 
-
-            for(Object entry : filelist) {
+            for (Object entry : filelist) {
                 ChannelSftp.LsEntry lsEntry = getInstance(entry);
 
-                if(lsEntry.getFilename().matches(regex) && lsEntry.getAttrs().getMTime()>lastModifyDate) {
+                if (lsEntry.getFilename().matches(regex) && lsEntry.getAttrs().getMTime() > lastModifyDate) {
                     fileList.add(lsEntry.getFilename());
-                    lastModifyDate= lsEntry.getAttrs().getMTime();
+                    lastModifyDate = lsEntry.getAttrs().getMTime();
                 }
-                System.out.println(lsEntry.getFilename());
             }
 
-
-
-
-            if(fileList.isEmpty())
-                for(String fName: fileList){
-                    sftpChannel.get(fName,fName);
+            if (!fileList.isEmpty())
+                for (String fName : fileList) {
+                    sftpChannel.get(fName, "testFiles/testSSH/" + fName);
                 }
 
-
-
-
-        } catch(Exception e ){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-//    return fileList;
     }
 
-    private ChannelSftp.LsEntry getInstance(Object obj){
-        return (com.jcraft.jsch.ChannelSftp.LsEntry)obj;
+    private ChannelSftp.LsEntry getInstance(Object obj) {
+        return (com.jcraft.jsch.ChannelSftp.LsEntry) obj;
 
     }
 
-
-    }
+}
 
