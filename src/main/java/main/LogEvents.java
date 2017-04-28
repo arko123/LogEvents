@@ -28,6 +28,8 @@ public class LogEvents {
 		System.out.println("getlogsFrom: "+downloadConfiguration.getlogsFrom);
 		System.out.println("saveLogsIn: "+downloadConfiguration.saveLogsIn);
 		System.out.println("connectionType: "+downloadConfiguration.connectionType);
+		System.out.println("host: "+downloadConfiguration.host);
+		System.out.println("port: "+downloadConfiguration.port);
 		System.out.println("----------------------------------------");
 		
 		this.mailProperties= new MailProperties(mailPropertyFilePath);
@@ -94,7 +96,8 @@ public class LogEvents {
 
 	private void runSSH() throws IOException, InterruptedException{
 		System.out.println("runSSH");
-		SSHConnect sshConnect = new SSHConnect("usrname", "passwd","hostname",11,"port","asd",12345);
+		SSHConnect sshConnect = new SSHConnect(downloadConfiguration.user, downloadConfiguration.password,downloadConfiguration.host,downloadConfiguration.port,downloadConfiguration.getlogsFrom,downloadConfiguration.saveLogsIn,
+				downloadConfiguration.fileNameRegex,new Date().getTime());
 		LogAnalyzer logAnalizer = new LogAnalyzer(downloadConfiguration.saveLogsIn,mailProperties);
 
 		do{

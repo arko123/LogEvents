@@ -12,6 +12,8 @@ public class DownloadConfiguration {
 	public String saveLogsIn;
 	public String fileNameRegex;
 	public long runFrequency;
+	public String host;
+	public int port;
 
 
 	public DownloadConfiguration(String downloadConfFilePath) {
@@ -51,6 +53,8 @@ public class DownloadConfiguration {
 				default :
 					throw new IllegalArgumentException("Invalid connectionType: ");
 			}
+			host = prop.getProperty(DownloadConfigurationTags.HOST, null);
+			port = Integer.parseInt(prop.getProperty(DownloadConfigurationTags.PORT, "0"));
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {

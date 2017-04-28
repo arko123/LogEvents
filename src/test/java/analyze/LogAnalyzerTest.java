@@ -1,11 +1,11 @@
-package analize;
+package analyze;
 
 import java.io.IOException;
 
+import analize.LogAnalyzer;
 import mail.MailProperties;
-import main.LogEvents;
 
-public class LogAnalizerTest {
+public class LogAnalyzerTest {
 	public static void main(String[] args) throws InterruptedException, IOException {
 		//String propertiesPath = "C:\\Users\\LenovoY580_Wojtek\\git\\LogEvents\\testFiles\\properties\\download_local.properties"; 
 		String propertiesPath = "C:\\Users\\LenovoY580_Wojtek\\git\\LogEvents\\testFiles\\properties\\download_http.properties"; 

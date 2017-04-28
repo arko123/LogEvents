@@ -17,6 +17,7 @@ import mail.MailSender;
 public class LogAnalyzer {
 	String logsLocation;
 	MailSender mailSender;
+	String find = "test";
 	
 	public LogAnalyzer(String logsLocation, MailProperties mailProperties){
 		this.logsLocation=logsLocation;
@@ -24,7 +25,7 @@ public class LogAnalyzer {
 	}
 	
 	
-	public void run() throws IOException{
+	public void run(){
 		File directory = new File(logsLocation);
 		List<File> files = Arrays.asList(directory.listFiles());
 		
@@ -37,21 +38,30 @@ public class LogAnalyzer {
 
 		System.out.println("----------------LOG ANALYZER---------------------");
 		for(File file: files){
-			System.out.println("File analize: "+file.getName());
-			BufferedReader br=new BufferedReader(new FileReader(file));
-			String line;
-			
-			while((line=br.readLine())!=null){
-				if(line.contains("s")){
-					sendEmail = true;
-					messageBuffer.append("\n"+line);
+			System.out.println("File to analyze: "+file.getName());
+			BufferedReader br;
+			try {
+				br = new BufferedReader(new FileReader(file));
+
+				String line;
+				
+				while((line=br.readLine())!=null){
+					if(line.contains(find)){
+						sendEmail = true;
+						messageBuffer.append("\n"+line);
+						System.out.println("Event found "+ find + "in  file: "+file.getName());
+					}
 				}
+				br.close();
+			} catch (FileNotFoundException e) {
+	            System.out.println("FileNotFoundException "+ e.fillInStackTrace().toString());
+			} catch (IOException e) {
+	            System.out.println("IOException " + e.fillInStackTrace().toString());
 			}
-			br.close();
-			System.out.println("-------------------------------------");
 		}
 		
-		
+
+		System.out.println("-------------------------------------");
 		
 		if(sendEmail)
 			sendEmail(title,messageBuffer.toString());
