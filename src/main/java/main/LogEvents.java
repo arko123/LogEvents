@@ -3,6 +3,7 @@ package main;
 import java.io.IOException;
 import java.util.Date;
 
+import analize.AnalizeProperties;
 import analize.LogAnalyzer;
 import download.FTPConnect;
 import download.GetLocalLogs;
@@ -16,13 +17,14 @@ import mail.MailProperties;
 public class LogEvents {
 	private DownloadConfiguration downloadConfiguration;
 	private MailProperties mailProperties;
+	private AnalizeProperties analizeProperties;
 	
 
-	public LogEvents(String downloadConfFilePath,String mailPropertyFilePath){
-			this.initProps(downloadConfFilePath, mailPropertyFilePath);
+	public LogEvents(String downloadConfFilePath,String mailPropertyFilePath, String analizePropertyFilePath){
+			this.initProps(downloadConfFilePath, mailPropertyFilePath,analizePropertyFilePath);
 	}
 	
-	private void initProps (String downloadConfFilePath,String mailPropertyFilePath){
+	private void initProps (String downloadConfFilePath,String mailPropertyFilePath, String analizePropertyFilePath){
 		this.downloadConfiguration= new DownloadConfiguration(downloadConfFilePath);
 
 		System.out.println("------------LOGS_PROPERTIES------------------");
@@ -50,6 +52,11 @@ public class LogEvents {
 		System.out.println("auth: "+mailProperties.auth);
 		System.out.println("port: "+mailProperties.port);
 		System.out.println("----------------------------------------");
+		
+		this.analizeProperties= new AnalizeProperties(analizePropertyFilePath);
+		System.out.println("------------ANALIZE_PROPERTIES------------------");
+		System.out.println("search_regex: "+analizeProperties.search_regex);
+		System.out.println("----------------------------------------");
 	}
 	
 	public void run() throws InterruptedException, IOException{
@@ -74,7 +81,7 @@ public class LogEvents {
 	private void runLOCALHOST() throws InterruptedException, IOException {
 		System.out.println("runLOCALHOST");
 		GetLocalLogs getter = new GetLocalLogs(downloadConfiguration.getlogsFrom,downloadConfiguration.saveLogsIn,downloadConfiguration.fileNameRegex);
-		LogAnalyzer logAnalizer = new LogAnalyzer(downloadConfiguration.saveLogsIn,mailProperties);
+		LogAnalyzer logAnalizer = new LogAnalyzer(downloadConfiguration.saveLogsIn,mailProperties,analizeProperties);
 		
 		do{
 			getter.getLatestLogs();
@@ -88,7 +95,7 @@ public class LogEvents {
 	private void runHTTP() throws IOException, InterruptedException {
 		System.out.println("runHTTP");
 		GetLogsOverHttp getter = new GetLogsOverHttp(downloadConfiguration.getlogsFrom, downloadConfiguration.saveLogsIn);
-		LogAnalyzer logAnalizer = new LogAnalyzer(downloadConfiguration.saveLogsIn,mailProperties);
+		LogAnalyzer logAnalizer = new LogAnalyzer(downloadConfiguration.saveLogsIn,mailProperties,analizeProperties);
 		
 		do{
 			getter.getLatestLogs();
@@ -102,7 +109,7 @@ public class LogEvents {
 		System.out.println("runSSH");
 		SSHConnect sshConnect = new SSHConnect(downloadConfiguration.user, downloadConfiguration.password,downloadConfiguration.host,downloadConfiguration.port,downloadConfiguration.getlogsFrom,downloadConfiguration.saveLogsIn,
 				downloadConfiguration.fileNameRegex,new Date().getTime());
-		LogAnalyzer logAnalizer = new LogAnalyzer(downloadConfiguration.saveLogsIn,mailProperties);
+		LogAnalyzer logAnalizer = new LogAnalyzer(downloadConfiguration.saveLogsIn,mailProperties,analizeProperties);
 
 		do{
 			sshConnect.connectToServer();
@@ -116,7 +123,7 @@ public class LogEvents {
 	private void runFTP() throws IOException, InterruptedException{
 		System.out.println("runFTP");
 		FTPConnect ftpConnect = new FTPConnect("usrname", "passwd","hostname","path","port", new Date());
-		LogAnalyzer logAnalizer = new LogAnalyzer(downloadConfiguration.saveLogsIn,mailProperties);
+		LogAnalyzer logAnalizer = new LogAnalyzer(downloadConfiguration.saveLogsIn,mailProperties,analizeProperties);
 
 		do{
 			ftpConnect.getFiles();

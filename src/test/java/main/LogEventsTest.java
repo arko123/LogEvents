@@ -10,8 +10,11 @@ public class LogEventsTest {
 		String propertiesPath = "C:\\Users\\LenovoY580_Wojtek\\git\\LogEvents\\testFiles\\properties\\download_ssh.properties"; 
 		
 		String mailPropertyFilePath = "C:\\Users\\LenovoY580_Wojtek\\git\\LogEvents\\testFiles\\properties\\mail.properties";
+		 
+		String analizePropertiesPath = "C:\\Users\\LenovoY580_Wojtek\\git\\LogEvents\\testFiles\\properties\\analize.properties"; 
 		
-		LogEvents logEvents = new LogEvents(propertiesPath,mailPropertyFilePath);
+		
+		LogEvents logEvents = new LogEvents(propertiesPath,mailPropertyFilePath,analizePropertiesPath);
 		logEvents.run();
 	}
 

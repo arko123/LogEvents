@@ -16,11 +16,13 @@ import mail.MailSender;
 public class LogAnalyzer {
 	String logsLocation;
 	MailSender mailSender;
-	String find = "test";
+	String searchRegex ;
 	
-	public LogAnalyzer(String logsLocation, MailProperties mailProperties){
+	
+	public LogAnalyzer(String logsLocation, MailProperties mailProperties, AnalizeProperties analizeProperties){
 		this.logsLocation=logsLocation;
 		this.mailSender= new MailSender(mailProperties);
+		this.searchRegex = analizeProperties.search_regex;
 	}
 	
 	
@@ -45,10 +47,10 @@ public class LogAnalyzer {
 				String line;
 				
 				while((line=br.readLine())!=null){
-					if(line.contains(find)){
+					if(line.matches(searchRegex)){
 						sendEmail = true;
 						messageBuffer.append("\n"+line);
-						System.out.println("Event found "+ find + "in  file: "+file.getName());
+						System.out.println("Event found "+ searchRegex + "in  file: "+file.getName());
 					}
 				}
 				br.close();
