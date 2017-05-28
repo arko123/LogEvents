@@ -6,19 +6,20 @@ import java.util.Vector;
 
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 
 public class SSHConnect {
 
     String user;
-    private String host;
-    private String password;
-    private int port;
-    private String path;
-    private String pathTo;
-    private String regex;
-    private long lastModifyDate;
+     String host;
+     String password;
+     int port;
+     String path;
+     String pathTo;
+     String regex;
+     long lastModifyDate;
 
     public SSHConnect(String user, String password, String host, int port, String path, String pathTo, String regex, long lastModifyDate) {
         this.user = user;
@@ -38,17 +39,8 @@ public class SSHConnect {
 
 
         try {
-            JSch jsch = new JSch();
-            Session session = jsch.getSession(user, host, port);
-            session.setPassword(password);
-            session.setConfig("StrictHostKeyChecking", "no");
-            System.out.println("Establishing Connection...");
-            session.connect();
-            System.out.println("Connection established.");
-            System.out.println("Crating SFTP Channel.");
-            ChannelSftp sftpChannel = (ChannelSftp) session.openChannel("sftp");
-            sftpChannel.connect();
-            System.out.println("SFTP Channel created.");
+
+            ChannelSftp sftpChannel = createConnection(user, host, port);
 
             @SuppressWarnings("rawtypes")
 			Vector filelist = sftpChannel.ls(path);
@@ -73,6 +65,24 @@ public class SSHConnect {
         } catch (Exception e) {
             System.out.println("Exception "+e.getMessage());
         }
+    }
+
+    public ChannelSftp createConnection(String user, String host, int port) throws JSchException{
+
+
+            JSch jsch = new JSch();
+            Session session = jsch.getSession(user, host, port);
+            session.setPassword(password);
+            session.setConfig("StrictHostKeyChecking", "no");
+            System.out.println("Establishing Connection...");
+            session.connect();
+            System.out.println("Connection established.");
+            System.out.println("Crating SFTP Channel.");
+            ChannelSftp sftpChannel = (ChannelSftp) session.openChannel("sftp");
+            sftpChannel.connect();
+            System.out.println("SFTP Channel created.");
+
+        return sftpChannel;
     }
 
     private ChannelSftp.LsEntry getInstance(Object obj) {
