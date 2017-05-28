@@ -50,7 +50,8 @@ public class SSHConnect {
             sftpChannel.connect();
             System.out.println("SFTP Channel created.");
 
-            Vector filelist = sftpChannel.ls(path);
+            @SuppressWarnings("rawtypes")
+			Vector filelist = sftpChannel.ls(path);
             System.out.println("Found : "+filelist.size() + " files in"+ path);
 
 

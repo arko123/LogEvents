@@ -16,8 +16,15 @@ import mail.MailProperties;
 public class LogEvents {
 	private DownloadConfiguration downloadConfiguration;
 	private MailProperties mailProperties;
+	private boolean logsEnabled;
 	
-	LogEvents(String downloadConfFilePath,String mailPropertyFilePath){
+
+	public LogEvents(String downloadConfFilePath,String mailPropertyFilePath){
+			this.initProps(downloadConfFilePath, mailPropertyFilePath);
+		
+	}
+	
+	private void initProps (String downloadConfFilePath,String mailPropertyFilePath){
 		this.downloadConfiguration= new DownloadConfiguration(downloadConfFilePath);
 
 		System.out.println("------------LOGS_PROPERTIES------------------");
@@ -45,7 +52,6 @@ public class LogEvents {
 		System.out.println("auth: "+mailProperties.auth);
 		System.out.println("port: "+mailProperties.port);
 		System.out.println("----------------------------------------");
-		
 	}
 	
 	public void run() throws InterruptedException, IOException{
@@ -123,6 +129,7 @@ public class LogEvents {
 
 	}
 	
+
 	
 
 }

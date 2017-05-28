@@ -72,8 +72,8 @@ public class GetLocalLogs {
 	    	for(File file:files){
     			Path source =Paths.get(pathFrom+file.getName());
 				Path target=Paths.get(pathTo+file.getName());
-/*					System.out.println("target " + target.toString());	
-				System.out.println("source " + source.toString());	*/
+				System.out.println("target " + target.toString());	
+				System.out.println("source " + source.toString());	
 				Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
     			System.out.println("Downloaded file: "+file.getName());
     			
