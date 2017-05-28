@@ -1,5 +1,6 @@
 package download;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +12,7 @@ import org.apache.commons.net.ftp.FTPReply;
 
 public class FTPConnect {
 
-    private String user;
+
 
     public FTPConnect(String user, String server, String pass, String path, String regex, Date modify) {
         this.user = user;
@@ -21,12 +22,12 @@ public class FTPConnect {
         this.regex = regex;
         this.modify = modify;
     }
-
-    private String server;
-    private String pass;
-    private String path;
-    private String regex;
-    private Date modify;
+    String user;
+     String server;
+     String pass;
+     String path;
+     String regex;
+     Date modify;
 
 
     private static void showServerReply(FTPClient ftpClient) {
@@ -38,30 +39,40 @@ public class FTPConnect {
         }
     }
 
-
-
-    public void getFiles() {
-
-    	int port = 21;
+    public FTPClient createConnection(String server, String user, String pass) throws IOException{
         FTPClient ftpClient = new FTPClient();
+
+        ftpClient.connect(server, 21);
+        showServerReply(ftpClient);
+        int replyCode = ftpClient.getReplyCode();
+        if (!FTPReply.isPositiveCompletion(replyCode)) {
+            System.out.println("Operation failed. Server reply code: " + replyCode);
+            return ftpClient;
+        }
+        boolean success = ftpClient.login(user, pass);
+        showServerReply(ftpClient);
+        if (!success) {
+            System.out.println("Could not login to the server");
+            return ftpClient;
+        } else {
+            System.out.println("LOGGED IN SERVER");
+        }
+
+
+
+        return ftpClient;
+
+    }
+
+
+
+    public void getFiles() throws IOException{
+
+
+        FTPClient ftpClient = createConnection(server, user, pass);
         try {
             List<String> fileList = new ArrayList<String>();
 
-            ftpClient.connect(server, port);
-            showServerReply(ftpClient);
-            int replyCode = ftpClient.getReplyCode();
-            if (!FTPReply.isPositiveCompletion(replyCode)) {
-                System.out.println("Operation failed. Server reply code: " + replyCode);
-                return;
-            }
-            boolean success = ftpClient.login(user, pass);
-            showServerReply(ftpClient);
-            if (!success) {
-                System.out.println("Could not login to the server");
-                return;
-            } else {
-                System.out.println("LOGGED IN SERVER");
-            }
 
             FTPFile[] serverFileList = ftpClient.listFiles(path);
 
