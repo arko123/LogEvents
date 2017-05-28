@@ -57,8 +57,7 @@ public class SSHConnect {
 
             for (Object entry : filelist) {
                 ChannelSftp.LsEntry lsEntry = getInstance(entry);
-                //System.out.println("lsEntry.getFilename() : "+lsEntry.getFilename() + " lsEntry.getAttrs().getMTime()"+ lsEntry.getAttrs().getMTime()* 1000L + " NOW "+ lastModifyDate);
-
+             
                 if (lsEntry.getFilename().matches(regex) && lsEntry.getAttrs().getMTime()* 1000L > lastModifyDate) {
                     fileList.add(lsEntry.getFilename());
                     lastModifyDate = lsEntry.getAttrs().getMTime()* 1000L;

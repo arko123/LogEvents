@@ -16,12 +16,10 @@ import mail.MailProperties;
 public class LogEvents {
 	private DownloadConfiguration downloadConfiguration;
 	private MailProperties mailProperties;
-	private boolean logsEnabled;
 	
 
 	public LogEvents(String downloadConfFilePath,String mailPropertyFilePath){
 			this.initProps(downloadConfFilePath, mailPropertyFilePath);
-		
 	}
 	
 	private void initProps (String downloadConfFilePath,String mailPropertyFilePath){

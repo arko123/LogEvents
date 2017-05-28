@@ -11,6 +11,9 @@ public class App {
 				logEvents.run();
 			} catch (InterruptedException | IOException e) {
 				e.printStackTrace();
+				System.err.println("Please enter:");
+				System.err.println("1) Download Configuration File Path");
+				System.err.println("2) Mail Property File Path");
 			}
 		} else {
 			System.err.println("Wrong nuber of arguments");

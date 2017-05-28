@@ -29,7 +29,7 @@ public class MailProperties {
 
 			input = new FileInputStream(mailPropertyFilePath);
 
-			// load a properties file
+			// load a properties from file
 			prop.load(input);
 
 			to = prop.getProperty(MailPropertyTags.TO, null);

@@ -42,10 +42,7 @@ public class FTPConnect {
 
     public void getFiles() {
 
-//        server = "***";
-      int port = 21;
-//        user = "***";
-//        pass = "****";
+    	int port = 21;
         FTPClient ftpClient = new FTPClient();
         try {
             List<String> fileList = new ArrayList<String>();
@@ -64,7 +61,6 @@ public class FTPConnect {
                 return;
             } else {
                 System.out.println("LOGGED IN SERVER");
-//                System.out.println(ftpClient.listDirectories()[2].getName());
             }
 
             FTPFile[] serverFileList = ftpClient.listFiles(path);
