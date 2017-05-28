@@ -1,13 +1,21 @@
 package mail;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 
+import org.junit.Before;
+import org.junit.Test;
+
+
 public class MailSenderTest {
-
+	String title ;
+	String message ;
+	MailSender mailSender ;
 	
 
-	
-	public static void main(String[] args) throws InterruptedException, IOException {
+	@Before
+	public void mailSenderInit() throws InterruptedException, IOException {
 		String mailPropertyFilePath = "C:\\Users\\LenovoY580_Wojtek\\git\\LogEvents\\testFiles\\properties\\mail.properties";
 		MailProperties mailProperties= new MailProperties(mailPropertyFilePath);
 		System.out.println("------------MAIL_PROPERTIES------------------");
@@ -24,12 +32,23 @@ public class MailSenderTest {
 		System.out.println("----------------------------------------");	
 		
 		
-		String title = "Test Mail";
-		String message = "Hello \n"
+		 title = "Test Mail";
+		 message = "Hello \n"
 				+ "GOGGOGOGOGOGO\n"
 				+ "Regards\n"
 				+ "Me";
-		MailSender mailSender = new MailSender(mailProperties);
-		mailSender.sendMail(title, message);
+		 mailSender = new MailSender(mailProperties);
 	}
+	
+	@Test
+	public void mailSenderTest(){
+		try{
+			mailSender.sendMail(title, message);
+		}catch (Exception e) {
+			fail("Send mail error");
+		} {
+			
+		}
+	}
+	
 }

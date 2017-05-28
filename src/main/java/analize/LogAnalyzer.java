@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import mail.MailProperties;
 import mail.MailSender;
 
@@ -61,7 +63,11 @@ public class LogAnalyzer {
 		System.out.println("-------------------------------------");
 		
 		if(sendEmail)
-			sendEmail(title,messageBuffer.toString());
+			try {
+				sendEmail(title,messageBuffer.toString());
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
 		
 		clearFiles(files);
 	}
@@ -75,7 +81,7 @@ public class LogAnalyzer {
 		}
 	}
 	
-	private void sendEmail(String title, String message){
+	private void sendEmail(String title, String message) throws MessagingException{
 		mailSender.sendMail(title, message);
 	}
 	

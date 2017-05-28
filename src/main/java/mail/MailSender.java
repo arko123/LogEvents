@@ -12,7 +12,7 @@ public class MailSender {
 	}
 	
 	
-	public void sendMail(String title,String message){
+	public void sendMail(String title,String message) throws MessagingException{
 	      // Get system properties
 	      Properties properties = System.getProperties();
 	      // Setup mail server
@@ -48,6 +48,7 @@ public class MailSender {
 	         System.out.println("Sent message successfully....");
 	      }catch (MessagingException mex) {	         
 	         System.out.println("MAILERROR....\n"+mex.fillInStackTrace().toString());
+	         throw(mex);
 	      }		
 	}
 	
