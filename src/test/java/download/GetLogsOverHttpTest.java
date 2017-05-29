@@ -18,13 +18,12 @@ public class GetLogsOverHttpTest {
 	GetLogsOverHttp getLogs;
 	
 	@Before
-	public  void init(String[] args) throws IOException, InterruptedException {
+	public  void init() throws IOException, InterruptedException {
 		 dirURL = "http://student.agh.edu.pl/~wbachta/ZTW/";
 		 fileName = "Start.txt";
 		 saveDir ="C:\\Users\\LenovoY580_Wojtek\\git\\LogEvents\\testFiles\\to\\";
 
-		 getLogs = new GetLogsOverHttp(saveDir+fileName, saveDir);
-		
+		 getLogs = new GetLogsOverHttp(dirURL+fileName, saveDir);
 	}
 	
 	@Test
